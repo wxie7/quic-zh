@@ -25,6 +25,19 @@ Initial包和Version Negotiation包作为响应发送时都有可能丢失，但
 并期望最终收到一个Initial包。
 
 \subsection{处理版本协商包}
-版本协商包被设计用来在未来协商用于QUIC连接的QUIC版本。 Future
-Standards Track规范可能会改变支持多个版本的 QUIC 的实现如何对接收到的
-版本协商数据包作出反应，以尝试使用这个版本建立连接。
+版本协商包被设计用来在未来协商用于QUIC连接的QUIC版本。 未来的Standards
+Track规范可能会改变支持多个版本的 QUIC 的实现如何对接收到的版本协商数
+据包作出反应，以尝试使用这个版本建立连接。
+
+一个仅支持当前版本的QUIC的客户端在接到版本协商包时必须（MUST）放弃当前
+的连接尝试，以下两种情况是例外。
+
+\begin{itemize}
+\item 如果客户端已经接收并成功处理了任何其他数据包，包括早期的版本协商
+  包，则必须（MUST）丢弃任何版本协商包。
+\item 客户端必须（MUST）丢弃列出了被客户端选择的QUIC版本的版本协商包。
+\end{itemize}
+% FIXME
+如何实现版本协商被未来的Standards Track规范列为未来的工作。特别的，未
+来的工作将会确保QUIC协议在面对版本下降攻击时的鲁棒性；前往
+\ref{subsec:version-downgrade} 查看。

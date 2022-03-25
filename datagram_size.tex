@@ -1,3 +1,33 @@
 \section{数据报（Datagram）大小}
 \subsection{初始的数据报大小}
 \label{subsec:initial-datagram-size}
+一个UDP数据报可以包含一个或多个QUIC包。数据报的大小指的是单个UDP数据报
+的有效载荷（payload）能够携带的QUIC包的大小的总和。数据报的大小包括一
+个或多个QUIC包的头和被保护的载荷，但是不包含UDP或IP的头。
+
+数据报的最大大小被定义为单个UDP数据包能够穿过网络路径发送的最大大小。
+QUIC不能（MUST NOT）在不支持最少1200bytes的数据包的网络中使用。
+
+QUIC假设最小的IP报文的大小为1280字节，这是最小的IPv6报文的大小，并且被
+大多数现代IPv4网络支持。假设IPv6的报文头最小是40bytes、IPv4的报文头最
+小是20bytes、UDP的报文头最小是8bytes，这导致IPv6的最大数据报的大小是
+1232bytes、IPv4的最大数据报的大小是1252bytes。因此，现代的IPv4和IPv6网
+络应该能够支持QUIC。
+
+\begin{quote}
+  如果路径仅支持1280bytes的IPv6最小MTU，则支持1200字节UDP有效负载的要
+  求将IPv6扩展头的可用空间限制为32bytes，或将IPv4选项的可用空间限制为
+  52bytes。这会影响初始数据包和路径验证。
+\end{quote}
+
+最大数据报的大小超过1200bytes的可以通过路径最大传输单元发现（PMTUD）
+（前往\ref{subsubsec:handling-of-icmp-messages-by-pmtud}）或数据报打包
+层PMTU发现（DPLMPTUD）（前往
+\ref{subsec:datagram-packetization-layer-pmtu-discovery}）来发现。
+
+\subsection{初始数据报大小}
+\subsection{路径最大传输单元}
+\subsubsection{通过PMTUD处理ICMP报文}
+\label{subsubsec:handling-of-icmp-messages-by-pmtud}
+\subsection{数据报打包层发现}
+\label{subsec:datagram-packetization-layer-pmtu-discovery}
