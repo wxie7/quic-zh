@@ -1,4 +1,4 @@
-\section{Version Negotiation（版本协商）}
+\section{版本协商（Version Negotiation）}
 版本协商允许服务器去指明它不支持的，但客户端使用的版本。服务器对每个收
 到的可能用来初始化一个新的连接的包发送一个版本协商的包作为响应。前往
 \ref{subsec:match-packet-connection}查看细节。
@@ -41,3 +41,14 @@ Track规范可能会改变支持多个版本的 QUIC 的实现如何对接收到
 如何实现版本协商被未来的Standards Track规范列为未来的工作。特别的，未
 来的工作将会确保QUIC协议在面对版本下降攻击时的鲁棒性；前往
 \ref{subsec:version-downgrade} 查看。
+
+\subsection{使用保留的版本}
+对于将来会使用新版本的服务器，客户端需要正确地处理不支持的版本。一些版
+本号（如0x?a?a?a?a，在\ref{sec:versions}中被定义）被保留用于包含在包含
+版本号的字段中。
+
+端点可以（MAY）向任何未知或不被支持的版本会被忽略的域添加保留版本，以
+用来测试另一个端点能否正确地忽略该值。比如，一个端点可以在版本协商包中
+包含一个保留的版本；前往\ref{subsubsec:version-negotiation-packet}查看。
+端点可以（MAY）发送包含保留版本的包（pakcet）去测试另一个端点是否正确
+地丢弃该包。
