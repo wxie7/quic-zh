@@ -1,4 +1,4 @@
-\section{数据报（Datagram）大小}
+\section{数据报大小（Datagram Size）}
 \subsection{初始的数据报大小}
 \label{subsec:initial-datagram-size}
 一个UDP数据报可以包含一个或多个QUIC包。数据报的大小指的是单个UDP数据报
@@ -25,9 +25,16 @@ QUIC假设最小的IP报文的大小为1280字节，这是最小的IPv6报文的
 层PMTU发现（DPLMPTUD）（前往
 \ref{subsec:datagram-packetization-layer-pmtu-discovery}）来发现。
 
-\subsection{初始数据报大小}
 \subsection{路径最大传输单元}
 \subsubsection{通过PMTUD处理ICMP报文}
 \label{subsubsec:handling-of-icmp-messages-by-pmtud}
+
 \subsection{数据报打包层发现}
 \label{subsec:datagram-packetization-layer-pmtu-discovery}
+
+\subsubsection{DPLPMTUD和初始的连接性}
+\subsubsection{通过DPLPMTUD确认网络路径}
+\subsubsection{通过DPLPMTUD处理ICMP报文}
+
+\subsection{发送QUIC的PMTU探测}
+\subsubsection{PMTU探测包含scid}

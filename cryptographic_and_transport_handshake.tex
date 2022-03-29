@@ -1,0 +1,29 @@
+\section{加密和传输握手（Cryptographic and Transport Handshake）}
+QUIC依赖结合了加密和传输握手的方法去最小化连接建立的时延。QUIC使用
+CRYPTO帧（\ref{subsec:crypto-frames}）去传输加密的握手包。本文档中定义
+的QUIC版本被标识为0x00000001并且使用
+[\ref{subsec:normative-references:quic-tls}]中描述的TLS；不同的QUIC版
+本表明使用了不同的加密握手协议。
+
+QUIC提供可靠的、按序到达的加密握手数据。QUIC包保护（packet protection）
+被用来加密尽可能多的握手协议。加密握手必须（MUST）提供以下属性：
+\begin{itemize}
+\item 认证密钥交换，其中
+  \begin{itemize}
+  \item 服务端总是被认证
+  \item 客户端可选择地被认证
+  \item 每次连接都不产生不同的、不相关的密钥
+  \item 密钥可被用来对0-RTT、1-RTT包的包保护
+  \end{itemize}
+\item 两个端点的认证的传输参数交换和对服务端的传输参数的加密保护（前往
+  \ref{subsec:transport-parameters}）。
+\item 应用层协议的认证协商（TLS为此使用了应用层协议协商（ALPN）
+  [\ref{subsec:informative-references:alpn}]）。
+\end{itemize}
+
+CRYPTO帧可以在不同的包（packet）序号空间中发送
+（\ref{subsec:packet-numbers}）。CRYPTO帧使用的偏移量确保加密的握手数
+据的有序交付从每个包序号空间的0开始。
+
+\subsection{传输参数}
+\label{subsec:transport-parameters}
